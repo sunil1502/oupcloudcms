@@ -1,0 +1,11 @@
+{
+    "name": "sample-registration-form",
+    "private": true,
+    "dependencies": {
+        "jquery": "1.11.1",
+        "gitana": "1.0.162",
+        "alpaca": "1.5.9",
+        "handlebars": "3.0.3",
+        "bootstrap": "3.3.4"
+    }
+}

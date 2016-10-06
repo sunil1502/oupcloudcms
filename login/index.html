@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="//code.cloudcms.com/gitana-javascript-driver/1.0.190/gitana.js"></script>
+        <script>
+
+            $( document ).ready(function() {
+                $("#send").click(function(e) {
+                    
+                    e.preventDefault();
+
+                    var username = $("#username").val();
+                    var password = $("#password").val();                    
+                    
+                    Gitana.connect({
+                        "clientKey": "TODO",
+                        "clientSecret": "TODO",              
+                        "application": "TODO",
+                        "username": username,
+                        "password": password,
+                        "baseURL": "https://api.cloudcms.com"             
+                    }, function(err) {
+                        
+                        if (err) {
+                            return alert("Callback: " + JSON.stringify(err));
+                        }
+                        
+                        alert("Authentication Succeeded");
+
+                    });
+                    
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td>Username</td>
+                <td><input id="username" type="text"></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><input id="password" type="password"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input id="send" type="button" value="Send"></td>
+            </tr>
+        </table>
+    </body>
+</html>

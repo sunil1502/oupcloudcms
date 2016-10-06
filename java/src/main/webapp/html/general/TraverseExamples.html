@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <link type="text/css" href="${alpaca.css}" rel="stylesheet"/>
+    <link type="text/css" href="../../css/gitana-sdk-${project.version}.css" rel="stylesheet"/>
+    <link type="text/css"
+          href="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/themes/base/jquery.ui.all.css"
+          rel="stylesheet"/>
+    <style>
+        .traverse-examples ul li {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/${jquery.version}/jquery.min.js">
+    </script>
+    <script type="text/javascript"
+            src="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/jquery-ui.min.js">
+    </script>
+    <script type="text/javascript" src="${alpaca.lib}">
+    </script>
+    <script type="text/javascript" src="${gitana.lib}">
+    </script>
+    <script type="text/javascript" src="../../js/gitana-sdk-${project.version}.js">
+    </script>
+    <script type="text/javascript" src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js"></script>
+    <script type="text/javascript" src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJScript.js"></script>
+    <link href="http://alexgorbatchev.com/pub/sh/current/styles/shCore.css" rel="stylesheet" type="text/css"/>
+    <link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript">
+        SyntaxHighlighter.all()
+    </script>
+</head>
+<body>
+<div class='gitana-example-container'>
+<div class='gitana-example-header' id='traverse-examples'>
+</div>
+<div class='gitana-example-body'>
+    <div class='gitana-example-case'>
+        <div id="field1">
+            <div>
+                <div class="traverse-examples">
+                    <ul>
+                    </ul>
+                </div>
+                <div class="form">
+                    <ul>
+                        <li>
+                            <label for="source-node">Source Node</label>
+                            <div class="field">
+                                <input type="text" id="source-node" size="75" value="creatures:coyote"/>
+                            </div>
+                        </li>
+                        <li>
+                            <label for="traverse" style="vertical-align:top;">Traverse</label>
+                            <div class="field">
+                                <textarea id="traverse" rows="10" cols="75"></textarea>
+                            </div>
+                        </li>
+                        <li>
+                            <button id="traverse-button">Traverse</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="results" id="traverse-results"></div>
+            <div class="error" id="error"></div>
+        </div>
+
+        <script type="text/javascript" id="field1-script">
+            $(function() {
+                $(document).ready(function() {
+                    var defaults = Gitana.SDK.defaults;
+                    new Gitana().authenticate(defaults.userName, defaults.password).trap(defaults.errorHandler).queryRepositories(defaults.creaturesRepositoryQuery).keepOne().then(function() {
+                        this.readBranch('master').then(function() {
+                            var branch = this;
+                            $('#traverse-button').click(function() {
+                                branch.readNode($('#source-node').val()).traverse(JSON.parse($('#traverse').val())).nodeCount(function(count) {
+                                    $('#traverse-results').empty().append('<div class="total-results">Total ' + count + ' traverse results.</div>');
+                                }).nodes().each(function(key, node, index) {
+                                    var title = node.get('title') ? node.get('title') : node.getId();
+                                    var description = node.get('description') ? node.get('description') : "";
+                                    $('<div class="result-item"><div class="item-title" id="' + node.getQName() + '">' + (index + 1)
+                                            + '. ' + title + '</div><div class="item-description">'
+                                            + description + '</div></div>').click(
+                                            function() {
+                                                defaults.sourceViewer(node.object);
+                                            }).appendTo($('#traverse-results'));
+                                });
+                            });
+
+                        });
+                    });
+                });
+                var queries = {
+                    "example1" :{
+                        "title": "Find all nodes around the source node.",
+                        "traverse":{
+                        }
+                    },
+                    "example2" :{
+                        "title": "Find all nodes of depth 1 away from the source code.",
+                        "traverse":{
+                            "depth": 1
+                        }
+                    },
+                    "example3" :{
+                        "title": "Find all nodes of depth 2 away from the source code with INCOMING creatures:eats association.",
+                        "traverse":{
+                            "associations": {
+                                "creatures:eats": "INCOMING"
+                            },
+                            "depth": 2
+                        }
+                    },
+                    "example4" :{
+                        "title": "Find all nodes of any depth away from the source code with creatures:eats association.",
+                        "traverse":{
+                            "associations": {
+                                "creatures:eats": "ANY"
+                            }
+                        }
+                    },
+                    "example5" :{
+                        "title": "Find all nodes of depth 1 away from the source code with type 'creatures:creature'.",
+                        "traverse":{
+                            "types":["creatures:creature"],
+                            "depth":1
+                        }
+                    },
+                    "example6" :{
+                        "title": "Find all nodes of depth 1 away from the source code with either creatures:eats or a:updated association.",
+                        "traverse":{
+                            "associations": {
+                                "creatures:eats": "ANY",
+                                "a:updated":"ANY"
+                            },
+                            "depth":1
+                        }
+                    }
+                };
+                var examplesElem = $('.traverse-examples ul');
+                for (var key in queries) {
+                    $('<li id="' + key + '">' + queries[key].title + '</li>').click(
+                            function() {
+                                $('#traverse').val(JSON.stringify(queries[$(this).attr('id')].traverse, null, ' '));
+                                $('#traverse-button').click();
+                            }).appendTo(examplesElem);
+                }
+            });
+        </script>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="gitana-example-footer">
+    <center class="copyright">
+        Copyright &copy; 2011 Gitana Software | All Rights Reserved
+    </center>
+</div>
+</div>
+</body>
+</html>

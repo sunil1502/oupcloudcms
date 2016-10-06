@@ -1,0 +1,9 @@
+{
+    "_type": "wcm:page",
+    "_qname": "catalog:page-product",
+    "title": "Catalog - Product",
+    "uris": [
+        "/catalog/product.html"
+    ],
+    "template": "/templates/product.html"
+}

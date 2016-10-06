@@ -1,0 +1,10 @@
+{
+    "_type": "catalog:person",
+    "_parentFolderPath": "/Samples/Catalog/People",
+    "title": "Johnny Carson",
+    "name": "johnny.carson",
+    "email": "johnny.carson@tonightshow.com",
+    "firstName": "Johnny",
+    "lastName": "Carson",
+    "about": ""
+}

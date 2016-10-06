@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <link type="text/css" href="${alpaca.css}" rel="stylesheet"/>
+    <link type="text/css" href="../../css/gitana-sdk-${project.version}.css" rel="stylesheet"/>
+    <link type="text/css"
+          href="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/themes/base/jquery.ui.all.css"
+          rel="stylesheet"/>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/${jquery.version}/jquery.min.js">
+    </script>
+    <script type="text/javascript"
+            src="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/jquery-ui.min.js">
+    </script>
+    <script type="text/javascript" src="${alpaca.lib}">
+    </script>
+    <script type="text/javascript" src="${gitana.lib}">
+    </script>
+    <script type="text/javascript" src="../../js/gitana-sdk-${project.version}.js">
+    </script>
+    <script type="text/javascript" src="../../js/gitana-sdk-general-${project.version}.js">
+    </script>
+    <script type="text/javascript" src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js"></script>
+    <script type="text/javascript" src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJScript.js"></script>
+    <link href="http://alexgorbatchev.com/pub/sh/current/styles/shCore.css" rel="stylesheet" type="text/css"/>
+    <link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript">
+        SyntaxHighlighter.all()
+    </script>
+</head>
+<body>
+<div class='gitana-example-container'>
+    <div class='gitana-example-header' id='frontpage-products'>
+    </div>
+    <div class='gitana-example-body'>
+        <div class='gitana-example-case'>
+            <div id="field1">
+                <div class="results" id="products"></div>
+                <div class="error"></div>
+            </div>
+
+            <script type="text/javascript" id="field1-script">
+                $(function() {
+                    $(document).ready(function() {
+                        var gitana = new Gitana();
+                        var templateId = "../../templates/FrontPageProducts";
+                        var el = $('#products');
+                        var defaults = Gitana.SDK.defaults;
+                        gitana.authenticate(defaults.userName, defaults.password).trap(defaults.errorHandler).queryRepositories(defaults.theOfficeRepositoryQuery).keepOne().then(function() {
+                            this.readBranch('master').queryNodes({
+                                "_type" : "theoffice:product",
+                                "tags" : "Front Page"
+                            }).then(function() {
+                                var data = {
+                                    "list" : []
+                                };
+                                this.each( function() {
+                                    var node = this.object;
+                                    this.listAttachments().then(function() {
+                                        node.attachments = {};
+                                        this.each(function() {
+                                            node.attachments[this.getId()] = this.getDownloadUri();
+                                        }).then(function() {
+                                            data.list.push(node);
+                                        });
+                                    });
+                                }).then(function() {
+                                    new Gitana.jQueryTemplateEngine('LatestPromotion').render(el, templateId, {
+                                        "data": data
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            </script>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="gitana-example-footer">
+        <center class="copyright">
+            Copyright &copy; 2011 Gitana Software | All Rights Reserved
+        </center>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+    "_type": "catalog:person",
+    "_parentFolderPath": "/Samples/Catalog/People",
+    "title": "Frank Sinatra",
+    "name": "frank.sinatra",
+    "email": "sinatra@frankie.com",
+    "firstName": "Frank",
+    "lastName": "Sinatra",
+    "about": ""
+}

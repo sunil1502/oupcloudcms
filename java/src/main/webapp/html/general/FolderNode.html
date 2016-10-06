@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <link type="text/css" href="${alpaca.css}" rel="stylesheet"/>
+    <link type="text/css" href="../../css/gitana-sdk-${project.version}.css" rel="stylesheet"/>
+    <link type="text/css"
+          href="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/themes/base/jquery.ui.all.css"
+          rel="stylesheet"/>
+    <style>
+        .folder-node {
+            background: url('../../images/folder.png') no-repeat;
+            min-height: 48px;
+            margin-left: 48px;
+        }
+
+        .content-node {
+            background: url('../../images/document.png') no-repeat;
+            min-height: 48px;
+            margin-left: 48px;
+        }
+
+        .content-title {
+            padding: 2px 0 0 50px;
+            font-size: 1.2em;
+            min-height: 24px;
+        }
+
+        .folder-title {
+            padding: 2px 0 0 50px;
+            font-size: 1.2em;
+            text-decoration: underline;
+            min-height: 24px;
+            cursor: pointer;
+        }
+
+        .content-description, .folder-description {
+            padding: 2px 0 0 50px;
+            font-size: 1.0em;
+            min-height: 16px;
+        }
+    </style>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/${jquery.version}/jquery.min.js">
+    </script>
+    <script type="text/javascript"
+            src="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/jquery-ui.min.js">
+    </script>
+    <script type="text/javascript" src="${alpaca.lib}">
+    </script>
+    <script type="text/javascript" src="${gitana.lib}">
+    </script>
+    <script type="text/javascript" src="../../js/gitana-sdk-${project.version}.js">
+    </script>
+    <script type="text/javascript" src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js"></script>
+    <script type="text/javascript" src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJScript.js"></script>
+    <link href="http://alexgorbatchev.com/pub/sh/current/styles/shCore.css" rel="stylesheet" type="text/css"/>
+    <link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript">
+        SyntaxHighlighter.all()
+    </script>
+</head>
+<body>
+<div class='gitana-example-container'>
+    <div class='gitana-example-header' id='folder-node'>
+        <h2>Node</h2>
+    </div>
+    <div class='gitana-example-body'>
+        <div class='gitana-example-case'>
+            <h3>Folder</h3>
+            <h4>Folder Node</h4>
+
+            <div id="field1">
+                <div class="results" id="folders"></div>
+                <div class="error"></div>
+            </div>
+
+            <script type="text/javascript" id="field1-script">
+                $(function() {
+                    $(document).ready(function() {
+                        //TODO: add download links and source view links.
+                        var defaults = Gitana.SDK.defaults;
+                        var findChildren = function (parentNode, insertPoint) {
+                            var folderElem = $('<div class="folder-node" id="' + parentNode.getId() + '"><div class="folder-title">' + parentNode.getTitle() + '</div><div  class="folder-description">' + parentNode.getDescription() + '</div></div>');
+                            insertPoint.append(folderElem);
+                            $('.folder-title', folderElem).click(function() {
+                                $('.folder-node', folderElem).remove();
+                                $('.content-node', folderElem).remove();
+                                parentNode.listChildren().each(function() {
+                                    if (this.isContainer()) {
+                                        findChildren(this, $('#field1 #' + parentNode.getId()));
+                                    } else {
+                                        $('#field1 #' + parentNode.getId()).append('<div class="content-node"><div class="content-title">' + this.getTitle() + '</div><div class="content-description">' + this.getDescription() + '</div></div>');
+                                    }
+                                });
+                            });
+                        };
+                        var gitana = new Gitana();
+                        gitana.authenticate(defaults.userName, defaults.password).trap(defaults.errorHandler).queryRepositories(defaults.theOfficeRepositoryQuery).keepOne().then(function() {
+                            this.readBranch('master').readNode('theoffice:root').then(function() {
+                                findChildren(this, $('#folders'));
+                            });
+                        });
+                    });
+                });
+            </script>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="gitana-example-footer">
+        <center class="copyright">
+            Copyright &copy; 2011 Gitana Software | All Rights Reserved
+        </center>
+    </div>
+</div>
+</body>
+</html>

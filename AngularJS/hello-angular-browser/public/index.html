@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cloud CMS AngularJS Example (using a Proxy)</title>
+    <style>
+    </style>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="app/css/core.css">
+</head>
+<body ng-app="helloCloudcms">
+    <header>
+        <h1>Cloud CMS Example (using Proxy)</h1>
+    </header>
+    <section>
+        <div class="ng-cloak" ng-controller="NodeListCtrl as list">
+            <div class="notifications">{{ list.notification }}</div>
+            <ul class="container">
+               <gitana-node ng-repeat="node in list.nodes"></gitana-node>
+            </ul>
+        </div>
+    </section>
+
+    <!-- INCLUDING JS -->
+    <!-- include the javascript driver that will access CloucCMS -->
+    <script src="bower_components/gitana/dist/gitana.js"></script>
+
+    <!-- include AngularJS -->
+    <script src="bower_components/angularjs/angular.js"></script>
+
+    <!-- the location of our credentials for the purpose of this demo. -->
+    <script src="GITANA_CREDENTIALS.js"></script>
+
+    <!-- the declaration of our angular app (module) and declaration of its controllers module -->
+    <script src="app/js/app.js"></script>
+
+    <!-- Custom directives that simplify this application -->
+    <script src="app/js/directives.js"></script>
+
+    <!-- The services of our application -->
+    <script src="app/js/services.js"></script>
+
+    <!-- The controllers of our application -->
+    <script src="app/js/controllers.js"></script>
+</body>
+</html>

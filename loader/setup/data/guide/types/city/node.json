@@ -1,0 +1,63 @@
+{
+    "title": "Guide City",
+    "_qname": "guide:city",
+    "_type": "d:type",
+    "type": "object",
+    "properties": {
+        "title": {
+            "type": "string",
+            "title": "Title"
+        },
+        "summary": {
+            "type": "string",
+            "title": "Summary"
+        },
+        "body": {
+            "type": "string",
+            "title": "Body"
+        },
+        "state": {
+            "type": "string",
+            "title": "State"
+        },
+        "loc": {
+            "type": "object",
+            "title": "Location",
+            "properties": {
+                "latitude": {
+                    "type": "number",
+                    "title": "Latitude"
+                },
+                "longitude": {
+                    "type": "number",
+                    "title": "Longitude"
+
+                }
+            }
+        },
+        "highlights": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "title": "Highlights"
+        },
+        "testimonials": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "title": "Text"
+                    },
+                    "author": {
+                        "type": "string",
+                        "title": "Author"
+                    }
+                }
+            },
+            "title": "Testimonials"
+        }
+    }
+}

@@ -1,0 +1,32 @@
+# Hello World (Express)
+
+This Hello World example improves upon the basic Hello World project (in a different directory) by using Express
+to host a simple web server application.  The web application offers three functions:
+
+    a) Create 3 content items
+    b) Query for content items and display them
+    c) Delete content items
+
+The purpose of this project is to get a better sense of the CRUD operations that Cloud CMS supports.  We can not
+only query for content, but we can also create it, delete it and work with it in result sets.
+
+Jade is used as a templating engine and Express is kept in a pretty minimal configuration.
+
+If you're new to Node.js or Express, please take a look at the /helloworld example first.  This is covered in much
+more detail here:
+
+     https://www.cloudcms.com/helloworld.html
+
+
+## Setting things up
+
+First, download the gitana.json file for your application or use the cloudcms command line client to initialize a gitana.json
+in the local directory.
+
+Then run:
+
+    npm install
+    
+To run the app:
+
+    npm start

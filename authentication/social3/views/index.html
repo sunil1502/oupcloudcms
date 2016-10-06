@@ -1,0 +1,69 @@
+{>"layouts/default.html"/}
+
+{<content}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <br/>
+            <br/>
+
+            {?user}
+            Welcome {user.firstName} {user.lastName}!
+            <br/>
+            <br/>
+
+            <a href="/logout?redirectUri=/index.html">Log Out</a>
+
+            {:else}
+
+                <h2>Login</h2>
+
+                <p>
+                    You must sign in to use this web site.
+                </p>
+
+                {?messages.info}
+                <div class="alert alert-danger">
+                    {messages.info}
+                </div>
+                {/messages.info}
+
+                <form method="post" action="/login?failureUrl=/index.html&successUrl=/index.html">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="{username}">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="{password}">
+                    </div>
+                    <button type="submit" class="btn btn-default">Log In</button>
+                </form>
+
+                <br/>
+                <br/>
+
+                <p>
+                    Or sign in using one of these providers:
+                </p>
+
+                <ul>
+                    <li><a href="/auth/facebook">Facebook</a></li>
+                    <li><a href="/auth/twitter">Twitter</a></li>
+                    <li><a href="/auth/linkedin">LinkedIn</a></li>
+                </ul>
+
+                <p>
+                    If you do not have an account, you may <a href="registration.html">register</a> or click one of the providers above
+                    to get started.
+                </p>
+
+            {/user}
+
+        </div>
+    </div>
+</div>
+
+{/content}

@@ -1,0 +1,8 @@
+# Hello World
+
+This directory provides a simple Node.js web server that connects to the Cloud CMS Sample Project
+and hands back a list of cities.
+
+For more information, visit:
+
+    https://www.cloudcms.com/helloworld.html

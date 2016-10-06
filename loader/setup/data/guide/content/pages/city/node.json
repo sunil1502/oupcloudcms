@@ -1,0 +1,9 @@
+{
+    "_type": "wcm:page",
+    "title": "Guide - City",
+    "_qname": "guide:page-city",
+    "uris": [
+        "/guide/city.html"
+    ],
+    "template": "/templates/city.html"
+}

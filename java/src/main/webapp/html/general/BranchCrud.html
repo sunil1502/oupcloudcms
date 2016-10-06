@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <link type="text/css" href="${alpaca.css}" rel="stylesheet"/>
+    <link type="text/css" href="../../css/gitana-sdk-${project.version}.css" rel="stylesheet"/>
+    <link type="text/css"
+          href="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/themes/base/jquery.ui.all.css"
+          rel="stylesheet"/>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/${jquery.version}/jquery.min.js">
+    </script>
+    <script type="text/javascript"
+            src="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/jquery-ui.min.js">
+    </script>
+    <script type="text/javascript" src="${alpaca.lib}">
+    </script>
+    <script type="text/javascript" src="${gitana.lib}">
+    </script>
+    <script type="text/javascript" src="../../js/gitana-sdk-${project.version}.js">
+    </script>
+    <script type="text/javascript" src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js"></script>
+    <script type="text/javascript" src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJScript.js"></script>
+    <link href="http://alexgorbatchev.com/pub/sh/current/styles/shCore.css" rel="stylesheet" type="text/css"/>
+    <link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript">
+        SyntaxHighlighter.all()
+    </script>
+</head>
+<body>
+<div class='gitana-example-container'>
+    <div class='gitana-example-header' id='branch-crud'>
+        <h2>Security</h2>
+    </div>
+    <div class='gitana-example-body'>
+        <div class='gitana-example-case'>
+            <h3>Branch</h3>
+            <h4>Branch Operations.</h4>
+
+            <div id="field1">
+                <div class="form">
+                    <ul>
+                        <li>
+                            <label for="branch-id">Branch ID</label>
+
+                            <div class="field">
+                                <select id="branch-id">
+                                    <option value="">--- Select A Branch ---</option>
+                                </select>
+                            </div>
+                        </li>
+                        <li>
+                            <button id="new-branch">New Branch</button>
+                            <button id="delete-branch">Delete Branch</button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="results" id="branch-details"></div>
+                <div class="error"></div>
+            </div>
+
+            <script type="text/javascript" id="field1-script">
+                $(function() {
+                    $(document).ready(function() {
+                        var errorHandler = function(error) {
+                            $('#field1 .error').html("Error message: " + error.msg);
+                        };
+                        var gitana = new Gitana();
+                        var repo = null;
+                        gitana.authenticate("mscott_theoffice", "password").trap(errorHandler).queryRepositories(defaults.theOfficeRepositoryQuery).keepOne().then(function() {
+                            repo = this;
+                            this.listBranches().each(function() {
+                                $('#branch-id').append('<option value="' + this.getId() + '">' + this.get('title') + '</option>');
+                            });
+
+                            var updateBranchInfo = function  (branchId) {
+                                $('#branch-details').empty();
+                                if (branchId != '') {
+                                    repo.chain().readBranch(branchId).then(function() {
+                                        var title = this.get('title') ? this.get('title') : this.getId();
+                                        var description = this.get('description') ? this.get('description') : "";
+                                        $('#branch-details').append('<div class="result-item"><div class="item-title branch" id="' + this.getId() + '">'
+                                                + title + '</div><div class="item-description">'
+                                                + description + '</div><div>Tip Change Set :: '
+                                                + this.get('tip')+ '</div><div>Root Change Set :: '
+                                                + this.get('root')+ '</div></div>');
+                                    });
+                                }
+                            };
+
+                            $('#branch-id').change(function() {
+                                updateBranchInfo($('#branch-id').val());
+                            });
+
+                            $('#new-branch').click(function() {
+                                var branchId = $('#branch-id').val();
+                                if (branchId != '') {
+                                    repo.chain().createBranch(branchId,{
+                                        "title" :"New Branch",
+                                        "description":"New branch "
+                                    }).then(function(){
+
+                                    })
+                                }
+                            });
+                        });
+                    });
+                });
+            </script>
+
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="gitana-example-footer">
+        <center class="copyright">
+            Copyright &copy; 2011 Gitana Software | All Rights Reserved
+        </center>
+    </div>
+</div>
+</body>
+</html>

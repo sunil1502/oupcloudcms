@@ -1,0 +1,16 @@
+<script id="frontPageProductsTemplate" type="text/x-jquery-tmpl">
+    {{each(index, item) data.list}}
+    <div class="front-page-product">
+        <div class="front-page-product-image">
+            <img src="${item.attachments.thumbnail}" alt="${item.product}"/>
+        </div>
+        <div class="front-page-product-title"><a href="#/product/${item._qname}">${item.product}</a></div>
+        <div class="front-page-product-details">${item.details}</div>
+
+        <div class="front-page-product-sku">Item #${item.SKU}</div>
+        <div class="front-page-product-price">
+           Your Price: <span>$${item.price.price} / ${item.price.unit}</span>
+        </div>
+    </div>
+    {{/each}}
+</script>

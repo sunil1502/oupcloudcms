@@ -1,0 +1,67 @@
+{>"layouts/default.html"/}
+
+{<content}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <h2>Register for the Web Site</h2>
+
+            <p>
+                Just one more step.
+            </p>
+            <p>
+                We've filled out the form below with information from {providerTitle}.
+                <br/>
+                Please submit the form to complete your registration.
+            </p>
+
+            {?form.hasError}
+            <div class="alert alert-danger">
+            <ul>
+                {#form.errors}
+                <li>{field} - {error}</li>
+                {/form.errors}
+            </ul>
+            {/form.hasError}
+            </div>
+
+            <form method="post" action="/register?success=/index.html&failure=/registration.html">
+                <div class="form-group">
+                    <label for="email">Username</label>
+                    <input type="username" class="form-control" id="username" name="username" placeholder="Username" value="{username}" autofocus="true">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{email}">
+                </div>
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" value="{firstName}">
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name" value="{lastName}">
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Password</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Password (Verify)</label>
+                    <input type="password" class="form-control" id="passwordVerify" name="passwordVerify">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+
+        </div>
+    </div>
+</div>
+
+{/content}

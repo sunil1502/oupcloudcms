@@ -1,0 +1,10 @@
+{
+    "_type": "catalog:person",
+    "_parentFolderPath": "/Samples/Catalog/People",
+    "title": "Dean Martin",
+    "name": "dean.martin",
+    "email": "dean.martin@celebrityroast.com",
+    "firstName": "Dean",
+    "lastName": "Martin",
+    "about": ""
+}

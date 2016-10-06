@@ -1,0 +1,10 @@
+{
+    "_type": "catalog:person",
+    "_parentFolderPath": "/Samples/Catalog/People",
+    "title": "Don Rickles",
+    "name": "don.rickles",
+    "email": "don.rickles@hockeypuck.com",
+    "firstName": "Don",
+    "lastName": "Rickles",
+    "about": ""
+}

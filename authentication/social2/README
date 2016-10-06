@@ -1,0 +1,23 @@
+# Social Login Example
+
+To use this example, set the following environment variables:
+
+    SAMPLE_FACEBOOK_APP_ID
+    SAMPLE_FACEBOOK_APP_SECRET
+
+    SAMPLE_TWITTER_CONSUMER_KEY
+    SAMPLE_TWITTER_CONSUMER_SECRET
+
+    SAMPLE_LINKEDIN_API_KEY
+    SAMPLE_LINKEDIN_API_SECRET
+
+To build:
+
+    npm install
+
+To run:
+    npm start
+
+To change the port this runs on:
+
+    export PORT=4000

@@ -1,0 +1,39 @@
+{>"layouts/default.html"/}
+
+{<content}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <br/>
+            <br/>
+
+            {?user}
+            Welcome {user.firstName} {user.lastName}!
+            <br/>
+            <br/>
+            All properties:
+            {user|js}
+
+
+            {:else}
+
+                Choose a method for signing in
+
+                <br/>
+                <br/>
+
+                <ul>
+                    <li><a href="/auth/facebook">Facebook</a></li>
+                    <li><a href="/auth/twitter">Twitter</a></li>
+                    <li><a href="/auth/linkedin">LinkedIn</a></li>
+                </ul>
+
+            {/user}
+
+        </div>
+    </div>
+</div>
+
+{/content}

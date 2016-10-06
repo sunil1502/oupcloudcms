@@ -1,0 +1,22 @@
+<script id="productDetailsTemplate" type="text/x-jquery-tmpl">
+    <div class="product-details">
+        <div class="product-details-image">
+            <img src="${data.attachments.full}" alt="${data.product}"/>
+        </div>
+         <div class="product-details-info">
+            <div class="product-details-title">${data.product}</div>
+            <div class="product-details-sku">Item #${data.SKU}</div>
+            <div class="product-details-details">
+                ${data.details}
+            </div>
+            <div class="product-details-price">
+                Your Price: <span>$${data.price.price} / ${data.price.unit}</span>
+            </div>
+             <div class="product-details-categories">
+                 Categories: {{each(index, category) data.categories}}<span>${category}</span>{{/each}}
+             </div>
+        </div>
+        <div gadget="related_products_gadget" id="related_products">
+        </div>
+    </div>
+</script>

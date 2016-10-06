@@ -1,0 +1,10 @@
+{
+    "_type": "catalog:person",
+    "_parentFolderPath": "/Samples/Catalog/People",
+    "title": "Joan Rivers",
+    "name": "joan.rivers",
+    "email": "joan.rivers@fashionpolice.com",
+    "firstName": "Joan",
+    "lastName": "Rivers",
+    "about": ""
+}
