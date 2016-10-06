@@ -1,0 +1,60 @@
+# Simple Registration Form
+
+This repository provides a simple Alpaca form whose schema and options are loaded from content model
+definitions and forms that are stored within Cloud CMS.
+
+In addition, this example demonstrates how to post form information to Cloud CMS and collect it within a data list.
+
+## Configure your connection information
+
+Edit the js/sample.js file and fill in your API Key information for:
+
+- application
+- clientKey
+- clientSecret
+- username
+- password
+
+## Set up the Sample Data
+
+This sample relies upon sample data that can be acquired by installing the Cloud CMS Sample Forms Project.  Without
+this data, the sample can still be used as a reference for how to set up a standalone Alpaca form.
+
+If you don't have the sample data, you can do the following:
+
+1.  Create a Content Definition and Form for your registration.
+2.  Create a Data List and set the data list item type to your Content Definition from step #1.
+3.  Modify the js/sample.js file and provide correct values for schemaSource and optionsSource so that they identify
+    your data list (by list key) and form (by form key) respectively.
+
+The index.html page also loads an image on lines 33-34 of js/sample.js.  You don't have to do this.  Feel free to
+comment it out or add an image to your project with the path /Images/register-now.png.
+
+## Don't use localhost
+
+Modern browsers restricts Cross-Origin resource sharing for localhost.  Instead, do the following:
+
+1.  Edit your /etc/hosts file
+2.  Add an entry that maps 127.0.0.1 to testserver
+
+## Build the Project
+
+To install the project, you should run:
+
+    bower install
+
+This requires of course that you have Bower installed first.
+
+If you get challenged for any version inconsistencies, just pick the latest versions.
+
+## Start a Web Server
+
+Start a web server in the current directory.
+
+If you're running a Mac, you can do:
+
+    python -m SimpleHTTPServer
+
+And then check out:
+
+    http://testserver:8000
