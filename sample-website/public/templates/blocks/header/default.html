@@ -42,7 +42,17 @@
     <div id="mainHeader" role="banner">
         <div class="container">
             <nav class="navbar navbar-default" role="navigation">
-				<h1>UKHE Header </h1>
+				
+				
+				 {@query type="custom:custom:ukheheader" }
+                    {#rows}
+				    <section class="boxContent">
+                         <h3>{title}</h3>
+						<h5>{description}</h5>
+                    </section>
+					{/rows}
+                    {/query}
+				
 				<!--
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
